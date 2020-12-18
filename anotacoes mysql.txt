@@ -1,0 +1,140 @@
+insert into itau.cargos
+(cod_cargo,nome_cargo,valor_cargo)
+values
+("C1","Analista de Sistemas",6500.50),
+("C2","DBA em banco de dados",7580.00),
+("C3","Gerente de CPD",5980.00),
+("C4","Estagiário Jovem Aprendiz",1850.00);
+
+
+insert into itau.funcionario
+(nome_funcionario,cod_cargo)
+values
+("Bruno Moreira","C1"),
+("Caetano Jesus","C2"),
+("Diego Vinicius","C2"),
+("Robson David","C3"),
+("Ana Carolina","C3"),
+("Ricardo A. Bontempo","C4");
+
+
+
+Criando referência em SQL Puro
+
+create table itau.cargos(
+cod_cargo char(2) not null,
+nome_cargo varchar(50) not null,
+valor_cargo decimal(8,2) not null,
+primary key (cod_cargo));
+
+create table itau.funcionario(
+matricula int not null auto_increment,
+nome_funcionario varchar(50) not null,
+cod_cargo char(2) not null,
+primary key (matricula),
+foreign key (cod_cargo) references cargos(cod_cargo));
+
+
+
+Código fonte da tabela de produtos e tabela de marca
+ CREATE TABLE `Produtos` (
+	`cod_produto` int NOT NULL AUTO_INCREMENT,
+	`nome_produto` varchar(50) NOT NULL,
+	`cod_marca` int NOT NULL,
+	PRIMARY KEY (`cod_produto`)
+);
+
+CREATE TABLE `Marca` (
+	`cod_marca` int NOT NULL AUTO_INCREMENT,
+	`nome_marca` varchar(30) NOT NULL,
+	PRIMARY KEY (`cod_marca`)
+);
+
+ALTER TABLE `Produtos` ADD CONSTRAINT `Produtos_fk0` FOREIGN KEY (`cod_marca`) REFERENCES `Marca`(`cod_marca`);
+
+
+
+-- Insert dos dados da tabela marca
+insert into itau.marca
+(nome_marca)
+values
+("Microsoft"),
+("Epson"),
+("HP");
+
+-- Insert dos dados dainsert into itau.produtos
+(nome_produto,cod_marca)
+values
+("impressora",3),
+("monitor",3),
+("scanner",2),
+("mouse",1); tabela produtos
+
+
+
+
+
+Criando referencias entre tabelas com sql puro
+
+-- Vinculando tabelas com a PK e a FK
+
+select p.cod_marca,p.nome_produto,p.cod_marca,m.nome_marca,m.cod_marca
+from itau.produtos as p,
+itau.marca as m
+where 
+m.cod_marca=p.cod_marca;
+
+
+
+-- Mostra a quantidade de Registros
+select count(*) from itau.produto;
+
+select marca_produto, count(*) as Itens_por_Marca from itau.produto group by marca_produto;
+
+SELECT 
+    marca_produto,
+    COUNT(*) AS Itens_por_Marca,
+    SUM(quantidade_produto * valor_unitario_produto) AS Total_Produto
+   FROM
+    itau.produto
+GROUP BY marca_produto;
+
+==============
+
+alter table itau.produto add cidade varchar(30) not null;
+
+update itau.produto set cidade="São Paulo" where codigo_produto in(1,2,3);
+update itau.produto set cidade="Rio de Janeiro" where codigo_produto in(4,5);
+
+
+Criação da tabela de produto
+
+create table itau.produto(
+codigo_produto integer not null auto_increment primary key,
+nome_produto varchar(50) not null,
+quantidade_produto integer(4) not null,
+valor_unitario_produto decimal(8,2) not null);
+
+
+Criação da Tabela do itau
+
+create table itau.clientes(
+codigo_cliente int not null,
+nome_cliente varchar(50) not null,
+cpf_cliente char(11) not null,
+endereco_cliente varchar(80) not null,
+bairro_cliente varchar(50) not null,
+estado_cliente char(2) not null,
+idade_cliente int(3) not null,
+ddd_cliente char(3) not null,
+telefone char(9) not null,
+agencia char(4) not null,
+conta_corrente char(5) not null,
+digito_verificador int(1),
+email_cliente varchar(80) not null,
+data_modificacao_registros date not null,
+primary key (codigo_cliente,cpf_cliente));
+
+insert into itau.clientes
+(codigo_cliente,nome_cliente,cpf_cliente,endereco_cliente,bairro_cliente,estado_cliente,idade_cliente,ddd_cliente,telefone,agencia,conta_corrente,digito_verificador,email_cliente,data_modificacao_registros)
+ select codigo_cliente,nome_cliente,"Atualizar",endereco_cliente,bairro_cliente,"xx",idade_cliente,"000","000000000","0000","00000",0,email_cliente,"2020-12-08 12:54" from unibanco.clientes

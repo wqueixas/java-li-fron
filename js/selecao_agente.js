@@ -7,9 +7,9 @@ function validaUsuario() {
     }
 
     let user = JSON.parse(userTxt);
-    let perfil=`<h3>${user.name}</h3>`;
-    perfil=perfil+`<h6>${user.email}</h6>`;
-    perfil=perfil+`<h6>${user.racf}</h6>`;
+    let perfil = `<h3>${user.name}</h3>`;
+    perfil = perfil + `<h6>${user.email}</h6>`;
+    perfil = perfil + `<h6>${user.racf}</h6>`;
 
 
     document.getElementById("fotoUser").innerHTML = `<img src="${user.foto}" class="img-fluid img-thumbnail" alt="${user.name}">`;
@@ -50,7 +50,7 @@ function exibirParceiros(lista) {
     
     document.getElementById("selUser").innerHTML = opcoes; */
 
-    let opcoes = '';
+    let opcoes = '<option>Lista completa de agentes</option>';
     for (let i = 0; i < lista.length; i++) {
         opcoes = opcoes + ` <option value=${lista[i].id}>(${lista[i].volumeTransacional})   ${lista[i].nome}</option>`;
     }
@@ -84,14 +84,14 @@ function exibeTop10(lista) {
     document.getElementById("selUser").innerHTML = opcoes; */
 
     let opcoes = '<ul class="list-group">';
-    let valor=0;
+    let valor = 0;
 
 
     for (let i = 0; i < lista.length; i++) {
-        valor=parseInt(lista[i].volumeTransacional).toLocaleString();
+        valor = parseInt(lista[i].volumeTransacional).toLocaleString();
 
         opcoes = opcoes + ` <li class="list-group-item d-flex justify-content-between align-items-center">
-            ${lista[i].nome}<span class="badge bg-primary rounded-pill text-white">`+valor+`</span></li>`;
+            ${lista[i].nome}<span class="badge bg-primary rounded-pill text-white">` + valor + `</span></li>`;
     }
     opcoes = opcoes + '</ul>';
 
@@ -122,7 +122,7 @@ function mostraConsolidado() {
 function exibeConsolidado(lista) {
     let opcoes = '';
     let vStatus = ['Sucesso', 'Falha', 'Fraude'];
-    let valor=0;
+    let valor = 0;
 
     /*     if (lista.length > 0) {
             opcoes = `<div class="card"style="width: 18rem;">`;
@@ -142,21 +142,34 @@ function exibeConsolidado(lista) {
 
     if (lista.length > 0) {
         opcoes = opcoes + `<div class="card" style="width: 18rem;">`;
-        
-        
+
+
+                for (let i = 0; i < lista.length; i++) {
+                    opcoes = opcoes + `<div class="card-body">`;
+                    
+                    if (i == 0) {
+                        opcoes = opcoes + `<h4 class="card-title">${lista[i].agente}</h4>`;
+                    }
+                    opcoes = opcoes + `<img src="/img/${vStatus[lista[i].status]}.png" class="img-fluid img-thumbnail" alt="${vStatus[lista[i].status]}">`;
+                    
+                    
+                    opcoes = opcoes + `<h5 class="card-title" align=right>${lista[i].count}</h5>`;
+                    opcoes = opcoes + `</div>`;
+                }
+                opcoes = opcoes + `</div > `;
+/*                 opcoes = opcoes + `<div class="card border-info mb-3" style="max-width: 18rem;">`;
         for (let i = 0; i < lista.length; i++) {
-            opcoes = opcoes + `<div class="card-body">`;
             
             if (i == 0) {
-                opcoes = opcoes + `<h4 class="card-title">${lista[i].agente}</h4>`;
+                opcoes = opcoes + `<div class="card-header">${lista[i].agente}</div>`;
             }
-            opcoes = opcoes + `<img src="/img/${vStatus[lista[i].status]}.png" class="img-fluid img-thumbnail" alt="${vStatus[lista[i].status]}">`;
-            
-            /* opcoes = opcoes + `<h5 class="card-title">${vStatus[lista[i].status]}</h5>`; */
-            opcoes = opcoes + `<h5 class="card-title" align=right>${lista[i].count}</h5>`;
+            opcoes = opcoes + `<div class="card-body">`;
+            opcoes = opcoes + `<h5 class="card-title">${vStatus[lista[i].status]}</h5>`;
+            opcoes = opcoes + `<p class="card-text">${lista[i].count}</p>`;
             opcoes = opcoes + `</div>`;
         }
-        opcoes = opcoes + `</div > `;
+        opcoes = opcoes + `</div>`; */
+
     } else {
         opcoes = `Sem dados para esse agente`;
     }
