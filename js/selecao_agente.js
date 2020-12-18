@@ -84,10 +84,14 @@ function exibeTop10(lista) {
     document.getElementById("selUser").innerHTML = opcoes; */
 
     let opcoes = '<ul class="list-group">';
+    let valor=0;
+
 
     for (let i = 0; i < lista.length; i++) {
+        valor=parseInt(lista[i].volumeTransacional).toLocaleString();
+
         opcoes = opcoes + ` <li class="list-group-item d-flex justify-content-between align-items-center">
-            ${lista[i].nome}<span class="badge bg-primary rounded-pill text-white">${lista[i].volumeTransacional}</span></li>`;
+            ${lista[i].nome}<span class="badge bg-primary rounded-pill text-white">`+valor+`</span></li>`;
     }
     opcoes = opcoes + '</ul>';
 
@@ -118,6 +122,7 @@ function mostraConsolidado() {
 function exibeConsolidado(lista) {
     let opcoes = '';
     let vStatus = ['Sucesso', 'Falha', 'Fraude'];
+    let valor=0;
 
     /*     if (lista.length > 0) {
             opcoes = `<div class="card"style="width: 18rem;">`;
@@ -141,6 +146,7 @@ function exibeConsolidado(lista) {
         
         for (let i = 0; i < lista.length; i++) {
             opcoes = opcoes + `<div class="card-body">`;
+            
             if (i == 0) {
                 opcoes = opcoes + `<h4 class="card-title">${lista[i].agente}</h4>`;
             }
