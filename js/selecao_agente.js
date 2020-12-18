@@ -7,10 +7,14 @@ function validaUsuario() {
     }
 
     let user = JSON.parse(userTxt);
+    let perfil=`<h3>${user.name}</h3>`;
+    perfil=perfil+`<h6>${user.email}</h6>`;
+    perfil=perfil+`<h6>${user.racf}</h6>`;
 
 
-    document.getElementById("fotoUser").innerHTML = `<img src="${user.foto}" class="mr-3" alt="${user.name}">`;
-    document.getElementById("dadosUser").innerHTML = `${user.name} :  ${user.racf}`;
+    document.getElementById("fotoUser").innerHTML = `<img src="${user.foto}" class="img-fluid img-thumbnail" alt="${user.name}">`;
+    /* document.getElementById("dadosUser").innerHTML = `${user.name}<br>${user.email}<br>(${user.racf})`; */
+    document.getElementById("dadosUser").innerHTML = perfil;
     //buscarUsuarios();
     buscarParceiros();
     buscaTop10();
@@ -48,7 +52,7 @@ function exibirParceiros(lista) {
 
     let opcoes = '';
     for (let i = 0; i < lista.length; i++) {
-        opcoes = opcoes + ` <option value=${lista[i].id}>${lista[i].volumeTransacional} - ${lista[i].nome}</option>`;
+        opcoes = opcoes + ` <option value=${lista[i].id}>(${lista[i].volumeTransacional})   ${lista[i].nome}</option>`;
     }
 
     document.getElementById("selUser").innerHTML = opcoes;
@@ -82,7 +86,8 @@ function exibeTop10(lista) {
     let opcoes = '<ul class="list-group">';
 
     for (let i = 0; i < lista.length; i++) {
-        opcoes = opcoes + ` <li class="list-group-item">${lista[i].nome} - ${lista[i].volumeTransacional}</li>`;
+        opcoes = opcoes + ` <li class="list-group-item d-flex justify-content-between align-items-center">
+            ${lista[i].nome}<span class="badge bg-primary rounded-pill text-white">${lista[i].volumeTransacional}</span></li>`;
     }
     opcoes = opcoes + '</ul>';
 
@@ -139,9 +144,9 @@ function exibeConsolidado(lista) {
             if (i == 0) {
                 opcoes = opcoes + `<h4 class="card-title">${lista[i].agente}</h4>`;
             }
-            /* opcoes = opcoes + `<img src="/img/${vStatus[lista[i].status]}.jpeg" class="card-img-top">`; */
+            opcoes = opcoes + `<img src="/img/${vStatus[lista[i].status]}.png" class="img-fluid img-thumbnail" alt="${vStatus[lista[i].status]}">`;
             
-            opcoes = opcoes + `<h5 class="card-title">${vStatus[lista[i].status]}</h5>`;
+            /* opcoes = opcoes + `<h5 class="card-title">${vStatus[lista[i].status]}</h5>`; */
             opcoes = opcoes + `<h5 class="card-title" align=right>${lista[i].count}</h5>`;
             opcoes = opcoes + `</div>`;
         }
